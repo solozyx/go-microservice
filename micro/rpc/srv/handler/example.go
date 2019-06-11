@@ -11,6 +11,7 @@ import (
 type Example struct{}
 
 // Call is a single request handler called via client.Call or the generated client code
+// web端 调用RPC客户端的Call方法 访问的RPC服务具体实现
 func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.Response) error {
 	log.Log("Received Example.Call request")
 	rsp.Msg = "Hello " + req.Name
@@ -18,6 +19,7 @@ func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.R
 }
 
 // Stream is a server side stream handler called via client.Stream or the generated client code
+// 数据流检测
 func (e *Example) Stream(ctx context.Context, req *example.StreamingRequest, stream example.Example_StreamStream) error {
 	log.Logf("Received Example.Stream request with count: %d", req.Count)
 
@@ -34,6 +36,7 @@ func (e *Example) Stream(ctx context.Context, req *example.StreamingRequest, str
 }
 
 // PingPong is a bidirectional stream handler called via client.Stream or the generated client code
+// 心跳检测
 func (e *Example) PingPong(ctx context.Context, stream example.Example_PingPongStream) error {
 	for {
 		req, err := stream.Recv()

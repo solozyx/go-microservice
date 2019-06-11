@@ -12,8 +12,10 @@ import (
 	"github.com/micro/go-micro/client"
 )
 
+// (响应输出参数 w http.ResponseWriter,请求输入参数 r *http.Request)
 func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	// decode the incoming request as json
+	// 将传入的json参数解码到创建map中
 	var request map[string]interface{}
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), 500)
@@ -22,7 +24,10 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 
 	// call the backend service
 	// exampleClient := example.NewExampleService("go.micro.srv.template", client.DefaultClient)
+	// RPC调用客户端 连接 "go.micro.srv.srv" 服务
+	// 返回RPC调用客户端句柄
 	exampleClient := example.NewExampleService("go.micro.srv.srv", client.DefaultClient)
+	// RPC客户端调用远程RPC服务端Call服务
 	rsp, err := exampleClient.Call(context.TODO(), &example.Request{
 		Name: request["name"].(string),
 	})
@@ -32,6 +37,7 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// we want to augment the response
+	// 将RPC服务端返回数据最终返回给前端用户
 	response := map[string]interface{}{
 		"msg": rsp.Msg,
 		"ref": time.Now().UnixNano(),
