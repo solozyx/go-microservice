@@ -11,8 +11,12 @@ import (
 func main() {
 	// create new web service
 	service := web.NewService(
+		// 服务名称
 		web.Name("go.micro.web.web"),
+		// 服务版本
 		web.Version("latest"),
+		// 设置web服务端口号
+		web.Address(":8080"),
 	)
 
 	// initialise service
@@ -21,6 +25,7 @@ func main() {
 	}
 
 	// register html handler
+	// 注册web服务静态资源
 	service.Handle("/", http.FileServer(http.Dir("html")))
 
 	// register call handler

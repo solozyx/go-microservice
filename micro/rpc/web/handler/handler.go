@@ -6,7 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	example "github.com/micro/examples/template/srv/proto/example"
+	// example "github.com/micro/examples/template/srv/proto/example"
+	example "go-microservice/micro/rpc/srv/proto/example"
+
 	"github.com/micro/go-micro/client"
 )
 
@@ -19,7 +21,8 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// call the backend service
-	exampleClient := example.NewExampleService("go.micro.srv.template", client.DefaultClient)
+	// exampleClient := example.NewExampleService("go.micro.srv.template", client.DefaultClient)
+	exampleClient := example.NewExampleService("go.micro.srv.srv", client.DefaultClient)
 	rsp, err := exampleClient.Call(context.TODO(), &example.Request{
 		Name: request["name"].(string),
 	})
