@@ -23,7 +23,7 @@ var (
 func InitConfig() {
 	// TODO - 从配置文件读取配置信息 如果项目迁移需要进行修改
 	// 根据ini格式进行配置文件读取
-	appconf, err := config.NewConfig("ini", "/home/itcast/go/src/sss/IhomeWeb/conf/app.conf")
+	appconf, err := config.NewConfig("ini", "./conf/app.conf")
 	if err != nil {
 		beego.Debug(err)
 		return
